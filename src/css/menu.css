@@ -1,0 +1,19 @@
+.menu {
+    width: 150px;
+    height: auto;
+    border-left: 1px black groove;
+    border-top: 1px black groove;
+    border-right: 1px black groove;
+    -webkit-box-shadow: 3px 3px 1px 1px #ccc;  /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
+    -moz-box-shadow:    3px 3px 1px 1px #ccc;  /* Firefox 3.5 - 3.6 */
+    box-shadow:         3px 3px 1px 1px #ccc;  /* Opera 10.5, IE 9, Firefox 4+, Chrome 6+, iOS 5 */
+}
+
+.menu-item {
+    width: 150px;
+    height: 20px;
+    cursor: pointer;
+    border-bottom: 1px black groove;
+    text-align: center;
+    background-color: cornflowerblue;
+}
