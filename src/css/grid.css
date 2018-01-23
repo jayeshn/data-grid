@@ -17,6 +17,7 @@ table {
 
 table tr {
   background: white;
+  color: #555;
 }
 
 table tr:hover {
@@ -28,7 +29,7 @@ table tr:hover td {
 }
 
 table th, table td {
-  color: #999;
+  /*color: #999;*/
   border: 1px solid #eee;
   padding: 12px 35px;
   border-collapse: collapse;
@@ -36,12 +37,12 @@ table th, table td {
 }
 
 .selectCol, .menuCol {
-    padding: 1px 1px;    
+    padding: 1px 1px;
 }
 
 table th {
   background: #00cccc;
-  color: #fff;
+  /*color: #fff;*/
   text-transform: uppercase;
   font-size: 12px;
 }
