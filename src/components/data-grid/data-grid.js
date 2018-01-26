@@ -29,7 +29,15 @@ class DataGrid extends Component {
             "gridToolbarButtons": gridToolbar
         });
     }
-    
+
+    handleRowUpdate(rowIndex, field, newValue) {
+         this.props.onRowUpdate(rowIndex, field, newValue); 
+    }
+        
+    handleRowRemove(rowIndex) {
+         this.props.onRowRemove(rowIndex); 
+    }
+        
   render() {
     return (
         <div className="grid-container">
@@ -38,7 +46,7 @@ class DataGrid extends Component {
                     {this.state.gridToolbarButtons.map(aButton => (aButton.props.children))}
                 </caption>
                 <DataGridHeader headerCols={this.state.gridCols} />
-                <DataGridBody rows={this.props.data} headerCols={this.state.gridCols} />
+                <DataGridBody onRowUpdate={this.handleRowUpdate.bind(this)} onRowRemove={this.handleRowRemove.bind(this)} rows={this.props.data} headerCols={this.state.gridCols} />
             </table>
         </div>
     );
