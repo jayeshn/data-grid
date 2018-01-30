@@ -12,7 +12,7 @@ class DataGridHeader extends Component {
             <thead>
                 
                 <tr>
-                    <th className="selectCol"><input onClick={this.handleSelectAll.bind(this)} type="checkbox" checked={this.props.selectedRowCount == this.props.totalRowCount}/></th>
+                    <th className="selectCol"><input onChange={this.handleSelectAll.bind(this)} type="checkbox" checked={this.props.selectedRowCount === this.props.totalRowCount}/></th>
                     <th className="menuCol"></th>
                     {this.props.headerCols.map(header => (<th key={header.props.dataField}>{header.props.children}</th>))}
                 </tr>

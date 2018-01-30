@@ -17,6 +17,10 @@ class DataGridBody extends Component {
     handleCellUpdate(rowIndex, field, newValue) {
         this.props.onRowUpdate(rowIndex, field, newValue); 
     }
+
+    handleRowUpdate(index, row) {
+        this.props.onRowUpdate(index, row); 
+    }
     
     handleRowRemove(rowIndex) {
         this.props.onRowRemove(rowIndex); 
@@ -37,9 +41,9 @@ class DataGridBody extends Component {
                                                     onRowSelect={this.handleRowSelect.bind(this)} 
                                                     onRowValidate={this.handleRowValidate.bind(this)} 
                                                     onRowRemove={this.handleRowRemove.bind(this)} 
-                                                    onCellChange={this.handleCellUpdate.bind(this)} 
+                                                    onCellChange={this.handleRowUpdate.bind(this, index)} 
                                                     rowIndex={index} 
-                                                    key={row[this.state.keyField]} 
+                                                    key={index} 
                                                     rowData={row} 
                                                     rowMenuItems={this.props.rowMenuItems} 
                                                     headerCols={this.props.headerCols} 

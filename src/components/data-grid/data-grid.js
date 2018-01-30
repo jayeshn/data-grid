@@ -52,10 +52,14 @@ class DataGrid extends Component {
     rowIsSelected(row) {
         return row
     }
-    
-    handleRowUpdate(rowIndex, field, newValue) {
-         this.props.onRowUpdate(rowIndex, field, newValue); 
+
+    handleRowUpdate(index, row) {
+        this.props.onRowUpdate(index, row); 
     }
+    
+    /*handleRowUpdate(rowIndex, field, newValue) {
+         this.props.onRowUpdate(rowIndex, field, newValue); 
+    }*/
         
     handleRowRemove(rowIndex) {
          this.props.onRowRemove(rowIndex); 
@@ -96,7 +100,7 @@ class DataGrid extends Component {
 
         this.update(selectedRows, selectedCount);
          
-        this.props.onSelectAll()
+        this.props.onSelectAll(checked)
     }
 
     componentWillReceiveProps(newProps) {
