@@ -34,9 +34,8 @@ class App extends Component {
                 "data": data
             });
             self.selectedRowIndex = selectedRowIndex
-            console.log('success')
 		},function(resp) {
-            console.log('errorrrrrrrr')
+            console.log('errorrrrrrrr in load')
         });
     }
 
@@ -60,7 +59,6 @@ class App extends Component {
     }
 
     render() {
-        console.log('render')
     return (
       <div className="App">
         <DataGrid data={this.state.data}
@@ -133,22 +131,13 @@ class App extends Component {
         let newData = this.state.data;
         newData[index] = row;
         this.setState({"data": newData})
-        //this.props.onRowUpdate(row);
     }
 
-    /*handleRowUpdate(rowIndex, field, newValue) {
-        let newData = this.state.data;
-        newData[rowIndex][field] = newValue;
-        this.setState({"data": newData})
-    }*/
-
     removeRow(e) {
-        //this.props.onRowRemove(index);
         this.handleRowRemove(-1);
     }
 
     validateRow(e) {
-        //this.props.onRowValidate(index);
         this.handleRowValidate(0);    
     }
 
@@ -187,7 +176,7 @@ class App extends Component {
 			
             self.loadData();
 		},function(resp) {
-            console.log('errorrrrrrrr')
+            console.log('errorrrrrrrr in row validate')
         });
     }
 
@@ -214,25 +203,22 @@ class App extends Component {
     handleSave() {
         var self = this;
         RestService.httpPost('http://localhost:3001/numberDesign', this.state.data).then(function(resp) {
-			console.log('successsssss')
             self.loadData();
 		},function(resp) {
-            console.log('errorrrrrrrr')
+            console.log('errorrrrrrrr in save')
         });
     }
 
     handleRemove(_id) {
         var self = this;
         RestService.httpDelete('http://localhost:3001/removeNumber/'+_id).then(function(resp) {
-			console.log('successsssss')
             self.loadData();
 		},function(resp) {
-            console.log('errorrrrrrrr')
+            console.log('errorrrrrrrr in remove')
         });
     }
 
     handleValidate() {
-        console.log('validate');
         alert('[' + this.selectedRowIndex + '] ' + this.selectedCount)
         let numbers = []
         for (var i=0; i<this.selectedRowIndex.length; i++) {
@@ -243,7 +229,7 @@ class App extends Component {
 			
             self.loadData();
 		},function(resp) {
-            console.log('errorrrrrrrr')
+            console.log('errorrrrrrrr in validate')
         });
     }
 

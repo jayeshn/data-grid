@@ -18,7 +18,6 @@ class DataGridRow extends Component {
     
     showMenu(id, e) {
         document.getElementById(id).classList.toggle("show");
-        //e.stopPropagation();
     }
 
     selectRow(id, rowIndex, e) {
@@ -33,8 +32,6 @@ class DataGridRow extends Component {
 
     selectCheckBox(id, rowIndex, e) {
         let rowCheckBox = document.getElementById(id)
-//        rowCheckBox.checked=e.target.checked;
-//        rowCheckBox.value = (rowCheckBox.checked) ? rowIndex : "-1";
         this.props.onRowSelect(rowIndex, rowCheckBox.checked);
     }
     
@@ -54,7 +51,6 @@ class DataGridRow extends Component {
         });
         
         this.props.onCellChange(this.state.rowData);
-        //e.stopPropagation();
     }
 
     render() {

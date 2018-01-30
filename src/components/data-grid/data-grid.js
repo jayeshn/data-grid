@@ -56,10 +56,6 @@ class DataGrid extends Component {
     handleRowUpdate(index, row) {
         this.props.onRowUpdate(index, row); 
     }
-    
-    /*handleRowUpdate(rowIndex, field, newValue) {
-         this.props.onRowUpdate(rowIndex, field, newValue); 
-    }*/
         
     handleRowRemove(rowIndex) {
          this.props.onRowRemove(rowIndex); 
