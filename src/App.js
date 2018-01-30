@@ -185,7 +185,7 @@ class App extends Component {
         
         currData.push({
             "telephone_number":"",
-            "number_type": "",
+            "number_type": "Native",
             "number_status": "Identified",
             "btn": "",
             "provider": "",
@@ -219,7 +219,6 @@ class App extends Component {
     }
 
     handleValidate() {
-        alert('[' + this.selectedRowIndex + '] ' + this.selectedCount)
         let numbers = []
         for (var i=0; i<this.selectedRowIndex.length; i++) {
             numbers.push(this.state.data[i]["telephone_number"]);
