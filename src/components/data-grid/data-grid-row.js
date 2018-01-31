@@ -10,9 +10,9 @@ class DataGridRow extends Component {
         }
     }
 
-    componentWillMount() {
+    componentWillReceiveProps(nextProps) {
         this.setState({
-            "rowData": this.props.rowData
+            "rowData": nextProps.rowData
         });
     }
     
@@ -43,9 +43,19 @@ class DataGridRow extends Component {
         this.props.onRowValidate(rowIndex); 
     }
 
-    handleCellChange(name, e) {
+    handleCellChange1(name, e) {
         let rd = this.state.rowData;
         rd[name] = e.target.value;
+        this.setState({
+            "rowData": rd
+        });
+        
+        this.props.onCellChange(this.state.rowData);
+    }
+
+    handleCellChange(name, value) {
+        let rd = this.state.rowData;
+        rd[name] = value;
         this.setState({
             "rowData": rd
         });
@@ -73,16 +83,45 @@ class DataGridRow extends Component {
                 {
                     this.props.headerCols.map(child => (
                         <td key={child.props.dataField}>
-                            <input  type="text" 
-                                    value={this.state.rowData[child.props.dataField]} 
-                                    onChange={this.handleCellChange.bind(this, child.props.dataField)}
-                                    readOnly={child.props.nonEditable}
-                                    />
+                           <CellControl   cellData={this.state.rowData[child.props.dataField]}
+                                          dataField={child.props.dataField}
+                                          readOnly={child.props.nonEditable}
+                                          fieldType={child.props.fieldType}
+                                          enumValues={child.props.enumValues}
+                                          onCellChange={this.handleCellChange.bind(this)}
+                                          key={child.props.dataField}/>
+                            
                         </td>)
                     )
                 }
             </tr>
         );
+    }
+}
+
+class CellControl extends Component {
+    handleCellChange(dataField, e) {
+        this.props.onCellChange(dataField, e.target.value);
+    }
+
+    render() {
+        var control = (<div/>);
+        switch(this.props.fieldType) {
+            case 'enum':
+                control = (
+                    <select value={this.props.cellData} 
+                            onChange={this.handleCellChange.bind(this, this.props.dataField)}>{this.props.enumValues.map((enumValue, index) => (<option key={index} value={enumValue.value}>{enumValue.display}</option>))}
+                    </select>)
+                break;
+            default:
+                control = (<input  type="text" 
+                        value={this.props.cellData} 
+                        onChange={this.handleCellChange.bind(this, this.props.dataField)}
+                        readOnly={this.props.nonEditable}
+                        />)
+        }
+        
+        return (<span>{control}</span>)
     }
 }
 

@@ -185,7 +185,7 @@ class App extends Component {
         
         currData.push({
             "telephone_number":"",
-            "number_type": "",
+            "number_type": "Native",
             "number_status": "Identified",
             "btn": "",
             "provider": "",
@@ -194,15 +194,30 @@ class App extends Component {
             "address": "",
             "da_dl": "",
             "trunk": "",
-            "forwarde": ""
+            "forwarded": ""
         })
         
         this.setState({"data":currData})
     }
 
+    copyData(src, dest, key, index) {
+        if (key !== '_id' && key !== '__v' && key !== 'created_date') {
+            dest[key] = src[key];
+        }
+    }
+
     handleSave() {
         var self = this;
-        RestService.httpPost('http://localhost:3001/numberDesign', this.state.data).then(function(resp) {
+        let dataToSave = [];
+        let data = this.state.data;
+        for(let i=0; i<data.length; i++) {
+            dataToSave.push({});
+                
+            Object.keys(data[i]).forEach((key, index) => this.copyData(data[i], dataToSave[i], key, index));
+
+        }
+
+        RestService.httpPost('http://localhost:3001/numberDesign', dataToSave).then(function(resp) {
             self.loadData();
 		},function(resp) {
             console.log('errorrrrrrrr in save')
@@ -219,7 +234,6 @@ class App extends Component {
     }
 
     handleValidate() {
-        alert('[' + this.selectedRowIndex + '] ' + this.selectedCount)
         let numbers = []
         for (var i=0; i<this.selectedRowIndex.length; i++) {
             numbers.push(this.state.data[i]["telephone_number"]);
