@@ -110,16 +110,10 @@ class App extends Component {
                     <button id="validate-numbers-button" onClick={this.handleValidate.bind(this)}>V</button>
                 </DataGridToolbarButton>
                 <DataGridToolbarButton>
-                    <button id="port-numbers-button" onClick={this.handlePorting.bind(this)}>P</button>
+                    <button id="port-numbers-button" onClick={this.handleBulkRemove.bind(this)}>R</button>
                 </DataGridToolbarButton>
                 <DataGridToolbarButton>
-                    <button id="setup-trunk-button" onClick={this.handleTrunkCall.bind(this)}>T</button>
-                </DataGridToolbarButton>
-                <DataGridToolbarButton>
-                    <button id="add-address-button" onClick={this.handleAddress.bind(this)}>A</button>
-                </DataGridToolbarButton>
-                <DataGridToolbarButton>
-                    <button id="setup-forward-button" onClick={this.handleCallForward.bind(this)}>F</button>
+                    <button id="setup-trunk-button" onClick={this.handleProcessCSR.bind(this)}>P</button>
                 </DataGridToolbarButton>
             </DataGridToolbar>
         </DataGrid>
@@ -247,20 +241,22 @@ class App extends Component {
         });
     }
 
-    handlePorting() {
-        console.log('porting');
+    handleBulkRemove() {
+        let numberIds = []
+        for (var i=0; i<this.selectedRowIndex.length; i++) {
+            numberIds.push(this.state.data[i]["_id"]);
+        }
+        var self = this;
+        RestService.httpPost('http://jayeshn02:3001/removeNumbers/', numberIds).then(function(resp) {
+			
+            self.loadData();
+		},function(resp) {
+            console.log('errorrrrrrrr in validate')
+        });
     }
 
-    handleTrunkCall() {
-        console.log('trunk call');
-    }
-
-    handleAddress() {
-        console.log('address');
-    }
-
-    handleCallForward() {
-        console.log('setup call forward');
+    handleProcessCSR() {
+        console.log('process csr');
     }
 }
 
