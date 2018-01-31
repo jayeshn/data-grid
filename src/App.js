@@ -194,15 +194,30 @@ class App extends Component {
             "address": "",
             "da_dl": "",
             "trunk": "",
-            "forwarde": ""
+            "forwarded": ""
         })
         
         this.setState({"data":currData})
     }
 
+    copyData(src, dest, key, index) {
+        if (key !== '_id' && key !== '__v' && key !== 'created_date') {
+            dest[key] = src[key];
+        }
+    }
+
     handleSave() {
         var self = this;
-        RestService.httpPost('http://localhost:3001/numberDesign', this.state.data).then(function(resp) {
+        let dataToSave = [];
+        let data = this.state.data;
+        for(let i=0; i<data.length; i++) {
+            dataToSave.push({});
+                
+            Object.keys(data[i]).forEach((key, index) => this.copyData(data[i], dataToSave[i], key, index));
+
+        }
+
+        RestService.httpPost('http://localhost:3001/numberDesign', dataToSave).then(function(resp) {
             self.loadData();
 		},function(resp) {
             console.log('errorrrrrrrr in save')
