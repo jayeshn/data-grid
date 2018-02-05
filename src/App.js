@@ -26,7 +26,7 @@ class App extends Component {
 
     loadData() {
         let self = this;
-        RestService.httpGet('http://localhost:3001/numberDesign/1/2').then(function(resp) {
+        RestService.httpGet('http://jayeshn02:3001/numberDesign/1/2').then(function(resp) {
 			let data = resp;
             let selectedRowIndex = [];
             data.map(item => selectedRowIndex.push(false));
@@ -70,7 +70,7 @@ class App extends Component {
            onRowValidate={this.handleRowValidate.bind(this)}
            selectedRowCount={this.state.selectedCount}>
             <DataGridHeaderCols displayName="DataGridHeaderCols">
-                <DataGridHeaderCol isKey={true} dataField="telephone_number">Number</DataGridHeaderCol>
+                <DataGridHeaderCol isKey={true} dataField="telephone_number" validationPattern="\d{3}-\d{3}-\d{4}">Number</DataGridHeaderCol>
                 <DataGridHeaderCol dataField="number_type" fieldType="enum" enumValues={this.getNumberTypes()}>Type</DataGridHeaderCol>
                 <DataGridHeaderCol dataField="number_status" fieldType="enum" enumValues={this.getStatusTypes()} nonEditable>Status</DataGridHeaderCol>
                 <DataGridHeaderCol dataField="btn">BTN</DataGridHeaderCol>
@@ -98,22 +98,25 @@ class App extends Component {
             </DataGridRowMenu>
             <DataGridToolbar displayName="DataGridToolbar">
                 <DataGridToolbarButton>
-                    <button id="import-csr-button"><span className="glyphicon glyphicon-import"></span></button>
+                    <input type="file" id="fileElem" multiple accept="image/*" style={{"display":"none"}} onChange={this.handleProcessCSR.bind(this)} ref={input => { this.fileInput = input; }}/>
+                    <label htmlFor="fileElem" className="label label-primary">&nbsp;&nbsp;<span className="glyphicon glyphicon-import"></span>&nbsp;&nbsp;</label>
                 </DataGridToolbarButton>
                 <DataGridToolbarButton>
-                    <button id="add-number-button" onClick={this.handleAddNewRow.bind(this)}><span className="glyphicon glyphicon-plus"></span></button>
+                    <input type="button" id="add-button" style={{"display":"none"}} onClick={this.handleAddNewRow.bind(this)}/>
+                    <label htmlFor="add-button" className="label label-primary">&nbsp;&nbsp;<span className="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;</label>
                 </DataGridToolbarButton>
                 <DataGridToolbarButton>
-                    <button id="save-button" onClick={this.handleSave.bind(this)}><span className="glyphicon glyphicon-save"></span></button>
+                   <input type="button" id="save-button" style={{"display":"none"}} onClick={this.handleSave.bind(this)}/>
+                    <label htmlFor="save-button" className="label label-primary">&nbsp;&nbsp;<span className="glyphicon glyphicon-save"></span>&nbsp;&nbsp;</label>
+                    
                 </DataGridToolbarButton>
                 <DataGridToolbarButton>
-                    <button id="validate-numbers-button" onClick={this.handleValidate.bind(this)}>V</button>
+                   <input type="button" id="validate-numbers-button" style={{"display":"none"}} onClick={this.handleValidate.bind(this)}/>
+                    <label htmlFor="validate-numbers-button" className="label label-primary">&nbsp;&nbsp;<span className="glyphicon glyphicon-check"></span>&nbsp;&nbsp;</label>
                 </DataGridToolbarButton>
                 <DataGridToolbarButton>
-                    <button id="port-numbers-button" onClick={this.handleBulkRemove.bind(this)}>R</button>
-                </DataGridToolbarButton>
-                <DataGridToolbarButton>
-                    <button id="setup-trunk-button" onClick={this.handleProcessCSR.bind(this)}>P</button>
+                   <input type="button" id="port-numbers-button" style={{"display":"none"}} onClick={this.handleBulkRemove.bind(this)}/>
+                    <label htmlFor="port-numbers-button" className="label label-primary">&nbsp;&nbsp;<span className="glyphicon glyphicon-remove"></span>&nbsp;&nbsp;</label>
                 </DataGridToolbarButton>
             </DataGridToolbar>
         </DataGrid>
@@ -166,7 +169,7 @@ class App extends Component {
 
     handleRowValidate(rowIndex) {
         var self = this;
-        RestService.httpPost('http://localhost:3001/validateNumber/'+this.state.data[rowIndex]["telephone_number"]).then(function(resp) {
+        RestService.httpPost('http://jayeshn02:3001/validateNumber/'+this.state.data[rowIndex]["telephone_number"]).then(function(resp) {
 			
             self.loadData();
 		},function(resp) {
@@ -211,7 +214,7 @@ class App extends Component {
 
         }
 
-        RestService.httpPost('http://localhost:3001/numberDesign', dataToSave).then(function(resp) {
+        RestService.httpPost('http://jayeshn02:3001/numberDesign', dataToSave).then(function(resp) {
             self.loadData();
 		},function(resp) {
             console.log('errorrrrrrrr in save')
@@ -220,7 +223,7 @@ class App extends Component {
 
     handleRemove(_id) {
         var self = this;
-        RestService.httpDelete('http://localhost:3001/removeNumber/'+_id).then(function(resp) {
+        RestService.httpDelete('http://jayeshn02:3001/removeNumber/'+_id).then(function(resp) {
             self.loadData();
 		},function(resp) {
             console.log('errorrrrrrrr in remove')
@@ -233,7 +236,7 @@ class App extends Component {
             numbers.push(this.state.data[i]["telephone_number"]);
         }
         var self = this;
-        RestService.httpPost('http://localhost:3001/validateNumbers/', numbers).then(function(resp) {
+        RestService.httpPost('http://jayeshn02:3001/validateNumbers/', numbers).then(function(resp) {
 			
             self.loadData();
 		},function(resp) {
