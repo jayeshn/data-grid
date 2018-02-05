@@ -88,6 +88,7 @@ class DataGridRow extends Component {
                                           readOnly={child.props.nonEditable}
                                           fieldType={child.props.fieldType}
                                           enumValues={child.props.enumValues}
+                                          validationPattern={child.props.validationPattern}
                                           onCellChange={this.handleCellChange.bind(this)}
                                           key={child.props.dataField}/>
                             
@@ -100,8 +101,29 @@ class DataGridRow extends Component {
 }
 
 class CellControl extends Component {
+    onBlur(e) {
+    /*    var el = e.target
+        var b = el.checkValidity();
+        console.log(b);
+        if (!b) {
+            el.classList.add('error');
+            e.preventDefault();
+            el.focus();
+        } else {
+            el.classList.remove('error');
+        }*/
+    }
+
     handleCellChange(dataField, e) {
-        this.props.onCellChange(dataField, e.target.value);
+        var el = e.target
+        var b = el.checkValidity();
+        console.log(b);
+        if (!b) {
+            el.classList.add('error');
+        } else {
+            el.classList.remove('error');
+        }
+            this.props.onCellChange(dataField, e.target.value);
     }
 
     render() {
@@ -114,10 +136,12 @@ class CellControl extends Component {
                     </select>)
                 break;
             default:
-                control = (<input  type="text" 
-                        value={this.props.cellData} 
-                        onChange={this.handleCellChange.bind(this, this.props.dataField)}
-                        readOnly={this.props.nonEditable}
+                control = (<input   type="text" 
+                                    pattern={this.props.validationPattern}
+                                    value={this.props.cellData} 
+                                    onChange={this.handleCellChange.bind(this, this.props.dataField)}
+                                    onBlur={this.onBlur.bind(this)}
+                                    readOnly={this.props.nonEditable}
                         />)
         }
         
